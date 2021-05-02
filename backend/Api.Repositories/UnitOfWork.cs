@@ -8,22 +8,26 @@ namespace Api.Repositories
 {
     public class UnitOfWork
     {
-        private ApplicationContext _entities;
+        private ApplicationContext _context;
         public UserRepository UserRepository { get; set; }
+        public StatusRepository StatusRepository { get; set; }
+        public CriminalCodeRepository CriminalCodeRepository { get; set; }
 
-        public UnitOfWork(ApplicationContext entities)
+        public UnitOfWork(ApplicationContext context)
         {
-            _entities = entities;
-            UserRepository = new UserRepository(_entities);
+            _context = context;
+            UserRepository = new UserRepository(_context);
+            StatusRepository = new StatusRepository(_context);
+            CriminalCodeRepository = new CriminalCodeRepository(_context);
         }
         public async Task<int> Commit()
         {
-            return await _entities.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
 
-        public async Task Dispose()
+        public void Dispose()
         {
-            _entities.Dispose();
+            _context.Dispose();
         }
     }
 }

@@ -13,8 +13,8 @@ namespace Api.Controllers
     public class UserController : ControllerBase
     {
         public IConfiguration Configuration { get; }
-        private UserApplicationService _appService;
-        public UserController(IConfiguration configuration, UserApplicationService appService)
+        private UserService _appService;
+        public UserController(IConfiguration configuration, UserService appService)
         {
             _appService = appService;
             Configuration = configuration;

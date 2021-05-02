@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Layout } from "antd";
+import { Layout, Button } from "antd";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -9,6 +9,7 @@ import Logo from "./assets/logo.png";
 import MainRoutes from "./routes";
 import { useDispatch, useSelector } from "react-redux";
 import api from "./services/api";
+import history from "./history";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -25,16 +26,33 @@ const App = () => {
     setLoading(false);
   }, []);
 
+  const Logout = React.useCallback(() => {
+    localStorage.removeItem("token");
+    api.defaults.headers.Authorization = "";
+    dispatch({ type: "AUTHENTICATE", payload: false });
+    history.push("/");
+  });
+
   return (
     !loading && (
       <Container>
         <Layout className="layout">
-          <Layout.Header style={{ paddingLeft: "5px" }}>
+          <Header>
             <img src={Logo} alt="Logo" />
-          </Layout.Header>
+
+            {window.location.hash !== "#/" && (
+              <Actions>
+                <Button type="primary" size="small" danger onClick={Logout}>
+                  Sair
+                </Button>
+              </Actions>
+            )}
+          </Header>
+
           <Layout.Content>
             <MainRoutes />
           </Layout.Content>
+
           <ToastContainer
             position="top-center"
             autoClose={5000}
@@ -51,6 +69,22 @@ const App = () => {
     )
   );
 };
+
+const Actions = styled.div`
+  height: 90%;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+`;
+
+const Header = styled(Layout.Header)`
+  padding: 0 0.25rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
 const Container = styled.div`
   width: 60vw;

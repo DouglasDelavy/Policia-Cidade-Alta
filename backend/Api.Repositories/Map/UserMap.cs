@@ -11,6 +11,15 @@ namespace Api.Repositories.Map
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.HasKey(x => x.Id);
+
+            builder.HasMany(x => x.CriminalCodes)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.CreateUserId);
+
+            builder.HasMany(x => x.CriminalCodes)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UpdateUserId);
         }
     }
 }

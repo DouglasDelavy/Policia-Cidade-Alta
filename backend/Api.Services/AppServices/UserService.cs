@@ -11,10 +11,12 @@ using static BCrypt.Net.BCrypt;
 
 namespace Api.Services.AppServices
 {
-    public class UserApplicationService : GenericApplicationService
+    public class UserService
     {
-        public UserApplicationService(UnitOfWork uow) : base(uow)
+        private UnitOfWork _uow;
+        public UserService(UnitOfWork unitOfWork)
         {
+            _uow = unitOfWork;
         }
 
         public async Task<User> CreateUser(UserDto userDto)

@@ -51,7 +51,7 @@ const MainRoutes = () => {
 
 const Container = styled.div`
   width: 60vw;
-  height: 55vh;
+  height: 57vh;
   padding: 1rem;
 `;
 

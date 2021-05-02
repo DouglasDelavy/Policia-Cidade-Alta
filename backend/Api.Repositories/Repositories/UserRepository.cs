@@ -13,7 +13,7 @@ namespace Api.Repositories.Repositories
         }
 
         public IQueryable<User> GetByUserName(string userName) =>
-            _entities.UserRepository.Where(user => user.UserName == userName);
+            _context.UserRepository.Where(user => user.UserName == userName);
 
     }
 }

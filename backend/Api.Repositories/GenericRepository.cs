@@ -8,44 +8,44 @@ namespace Api.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        protected readonly ApplicationContext _entities;
-        public GenericRepository(ApplicationContext entities)
+        protected readonly ApplicationContext _context;
+        public GenericRepository(ApplicationContext context)
         {
-            _entities = entities;
+            _context = context;
         }
 
         public IQueryable<T> Query()
         {
-            return _entities.Set<T>().AsQueryable();
+            return _context.Set<T>().AsQueryable();
         }
 
         public void Add(T entity)
         {
-            _entities.Set<T>().Add(entity);
+            _context.Set<T>().Add(entity);
         }
 
         public void Delete(T entity)
         {
-            _entities.Set<T>().Remove(entity);
+            _context.Set<T>().Remove(entity);
         }
 
         public void Update(T obj)
         {
-            _entities.Entry(obj).State = EntityState.Modified;
+            _context.Entry(obj).State = EntityState.Modified;
         }
 
         public ICollection<T> GetAll()
         {
-            return _entities.Set<T>().ToList();
+            return _context.Set<T>().ToList();
         }
 
         public T GetById(int id)
         {
-            return _entities.Set<T>().Find(id);
+            return _context.Set<T>().Find(id);
         }
         public int Count()
         {
-            return _entities.Set<T>().Count();
+            return _context.Set<T>().Count();
         }
     }
 }

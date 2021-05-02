@@ -31,7 +31,8 @@ namespace Api
             services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("Api")));
             services.AddScoped<UnitOfWork>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped<UserApplicationService>();
+            services.AddScoped<UserService>();
+            services.AddScoped<CriminalCodeService>();
 
             var key = Encoding.ASCII.GetBytes(Configuration["Key"]);
             services.AddAuthentication(x =>

@@ -9,17 +9,17 @@ namespace Api.Models
     [Table("criminal_code")]
     public class CriminalCode
     {
-        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Penality { get; set; }
         public int PrisonTime { get; set; }
         public int StatusId { get; set; }
-        public DateTime CreateData { get; set; }
-        public DateTime UpdateData { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public int CreateUserId { get; set; }
         public int UpdateUserId { get; set; }
-        public virtual User user { get; set; }
+        public virtual User User { get; set; }
+        public virtual Status Status { get; set; }
     }
 }
