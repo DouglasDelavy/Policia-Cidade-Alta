@@ -35,7 +35,7 @@ Repositório é dedicado a policia de Cidade Alta, nele podemos controlar os có
 
 ```sh
 # Clonando o Repositório:
-$ git clone https://github.com/OddoAkbar/CDA.git
+$ git clone https://github.com/OddoAkbar/Policia-Cidade-Alta.git
 ```
 
 #### **Front-End**
