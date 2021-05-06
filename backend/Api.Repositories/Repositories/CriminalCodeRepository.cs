@@ -14,6 +14,8 @@ namespace Api.Repositories.Repositories
         }
         public IQueryable<CriminalCode> GetByName(string name) => _context.CriminalCodeRepository.Where(x => x.Name == name);
 
+        public IQueryable<CriminalCode> GetCriminalCodeById(int id) => _context.CriminalCodeRepository.Include(x => x.Status).Where(x => x.Id == id);
+
         public IQueryable<CriminalCode> GetAllCriminalCode(string filter = null) =>
             _context.CriminalCodeRepository.Include(x => x.Status).Where(x => EF.Functions.Like(x.Name, $"{filter}%"));
     }

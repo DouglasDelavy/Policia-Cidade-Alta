@@ -1,6 +1,7 @@
 ﻿using Api.Dtos;
 using Api.Models;
 using Api.Repositories;
+using Api.Repositories.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,15 +14,17 @@ namespace Api.Services.AppServices
 {
     public class UserService
     {
-        private UnitOfWork _uow;
-        public UserService(UnitOfWork unitOfWork)
+        private ApplicationContext _context;
+        private UserRepository userRepository;
+        public UserService(ApplicationContext context)
         {
-            _uow = unitOfWork;
+            _context = context;
+            userRepository = new UserRepository(_context);
         }
 
         public async Task<User> CreateUser(UserDto userDto)
         {
-            var user = await _uow.UserRepository.GetByUserName(userDto.UserName).FirstOrDefaultAsync();
+            var user = await userRepository.GetByUserName(userDto.UserName).FirstOrDefaultAsync();
             if (user != null)
             {
                 throw new Exception("Usuário já existente!");
@@ -33,15 +36,15 @@ namespace Api.Services.AppServices
                 Password = HashPassword(userDto.Password)
             };
 
-            _uow.UserRepository.Add(newUser);
-            await _uow.Commit();
+            userRepository.Add(newUser);
+            await _context.SaveChangesAsync();
 
             return newUser;
         }
 
         public async Task<User> CheckUser(UserDto userDto)
         {
-            var user = await _uow.UserRepository.GetByUserName(userDto.UserName).FirstOrDefaultAsync();
+            var user = await userRepository.GetByUserName(userDto.UserName).FirstOrDefaultAsync();
             if (user == null) throw new Exception("Usuário não encotrado!");
 
             var isValidPassword = Verify(userDto.Password, user.Password);

@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Input, Button, Pagination } from "antd";
+import { Pagination, Input, Button } from "antd";
 
-import Title from "../components/Title";
-import Table from "../components/Table";
-import api from "../services/api";
+import Title from "@src/components/Title";
+import Table from "./components/Table";
+import api from "@src/services/api";
+import history from "@src/history";
 
-const Home = () => {
-  const [data, setData] = React.useState([]);
-  const [count, setCount] = React.useState(1);
+const HomePage = () => {
+  const [data, setData] = useState([]);
+  const [count, setCount] = useState(1);
 
-  React.useEffect(() => {
-    fecthMore("", 0);
+  useEffect(() => {
+    fetchMore("", 0);
   }, []);
 
-  const fecthMore = async (filter = "", page = 0) => {
+  const fetchMore = async (filter = "", page = 0) => {
     const { data } = await api.get("code", {
       params: {
         page,
@@ -27,7 +28,7 @@ const Home = () => {
   };
 
   const onDelete = async (id) => {
-    const response = await api.delete("/code", {
+    await api.delete("/code", {
       params: {
         id,
       },
@@ -35,6 +36,8 @@ const Home = () => {
 
     const newData = data.filter((code) => code.id !== id);
     setData(newData);
+
+    toast.success("Código Penal apagado com sucesso");
   };
 
   return (
@@ -47,10 +50,12 @@ const Home = () => {
             placeholder={"Pesquisar"}
             enterButton="Buscar"
             onSearch={(e) => {
-              fecthMore(e);
+              fetchMore(e);
             }}
           />
-          <Button type="primary">Adicionar</Button>
+          <Button type="primary" onClick={() => history.push("/create")}>
+            Adicionar
+          </Button>
         </HeaderRight>
       </Header>
 
@@ -60,7 +65,7 @@ const Home = () => {
           simple
           defaultCurrent={1}
           total={count}
-          onChange={fecthMore}
+          onChange={(value) => fetchMore("", value - 1)}
         />
       </Main>
     </Container>
@@ -77,15 +82,15 @@ const HeaderRight = styled.div`
   justify-content: flex-end;
 `;
 
+const InputSearch = styled(Input.Search)`
+  width: 50%;
+`;
+
 const Main = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 1rem;
-`;
-
-const InputSearch = styled(Input.Search)`
-  width: 50%;
 `;
 
 const Header = styled.div`
@@ -96,6 +101,9 @@ const Header = styled.div`
   justify-content: space-between;
 `;
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
-export default Home;
+export default HomePage;

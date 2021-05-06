@@ -4,28 +4,42 @@ import { HashRouter as Router, Switch } from "react-router-dom";
 
 import CustomRoute from "./components/CustomRoute";
 
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-import Register from "./pages/Register";
+import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+import RegisterPage from "./pages/RegisterPage";
+import CreatePage from "./pages/CreatePage";
+import ViewPage from "./pages/ViewPage";
 
 const MainRoutes = () => {
   const routes = [
     {
       path: "/",
-      component: Login,
+      component: LoginPage,
       exact: true,
       isPrivate: false,
     },
     {
       path: "/register",
-      component: Register,
-      exact: true,
+      component: RegisterPage,
+      exact: false,
       isPrivate: false,
     },
     {
       path: "/home",
-      component: Home,
+      component: HomePage,
       exact: true,
+      isPrivate: true,
+    },
+    {
+      path: "/home/:id",
+      component: ViewPage,
+      exact: true,
+      isPrivate: true,
+    },
+    {
+      path: "/create",
+      component: CreatePage,
+      exact: false,
       isPrivate: true,
     },
   ];
@@ -51,7 +65,7 @@ const MainRoutes = () => {
 
 const Container = styled.div`
   width: 60vw;
-  height: 57vh;
+  height: 55vh;
   padding: 1rem;
 `;
 

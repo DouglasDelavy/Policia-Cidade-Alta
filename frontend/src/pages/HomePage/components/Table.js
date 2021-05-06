@@ -1,9 +1,14 @@
 import React, { memo } from "react";
 import styled from "styled-components";
+
 import { Popconfirm } from "antd";
 import { DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
+
 import { format, parseISO } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
+
+import history from "@src/history";
+import { convertValueToLocaleString } from "@src/utils/convertValueToLocaleString";
 
 const Table = ({ data, onDelete }) => {
   return (
@@ -21,22 +26,24 @@ const Table = ({ data, onDelete }) => {
         <tbody>
           {data.map((item) => (
             <tr key={item.id}>
-              <td>{item.name}</td>
+              <td onClick={() => history.push(`/home/${item.id}`)}>
+                {item.name}
+              </td>
               <td>
-                {format(parseISO(item.date), "dd/MM/yyyy HH:mm", {
+                {format(parseISO(item.date), "dd/MM/yy", {
                   locale: ptBR,
                 })}
               </td>
-              <td>{item.penality}</td>
+              <td>{convertValueToLocaleString(item.penality)}</td>
               <td>{item.status}</td>
-              <td>
+              <td className="actions">
                 <Popconfirm
                   title="Deseja Apagar"
                   onConfirm={() => onDelete(item.id)}
                 >
                   <DeleteTwoTone twoToneColor="#d11c06" />
                 </Popconfirm>
-                <EditTwoTone />
+                <EditTwoTone onClick={() => history.push(`/home/${item.id}`)} />
               </td>
             </tr>
           ))}
@@ -69,12 +76,18 @@ const Container = styled.div`
     background: #f0f2f5;
   }
 
-  th:last-child {
-    width: 5rem;
+  th:first-child {
+    width: 30rem;
   }
 
   tbody tr:hover {
     filter: brightness(0.9);
+  }
+
+  .actions {
+    width: 1rem;
+
+    text-align: center;
   }
 `;
 

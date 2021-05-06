@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import { Input, Button, Form } from "antd";
 
-import history from "../history";
-import api from "../services/api";
+import history from "@src/history";
+import api from "@src/services/api";
 
-const Register = () => {
-  const [loading, setLoading] = React.useState(false);
+const RegisterPage = () => {
+  const [loading, setLoading] = useState(false);
 
   const onFinish = async (value) => {
     try {
@@ -83,9 +84,7 @@ const Register = () => {
 
           <Form.Item>
             <ContentFooter>
-              <Button type="primary" onClick={() => history.push("/")}>
-                Login
-              </Button>
+              <Link to="/">Login</Link>
 
               <Button type="primary" htmlType="submit" loading={loading}>
                 Registrar
@@ -121,4 +120,4 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-export default Register;
+export default RegisterPage;

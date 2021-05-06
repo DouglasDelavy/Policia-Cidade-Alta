@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -6,12 +6,12 @@ import { useDispatch } from "react-redux";
 import { Input, Button, Form } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
-import api from "../services/api";
-import history from "../history";
+import api from "@src/services/api";
+import history from "@src/history";
 
-const Login = () => {
+const LoginPage = () => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onFinish = async (userDto) => {
     try {
@@ -22,12 +22,15 @@ const Login = () => {
       } = await api.post("/user", JSON.stringify(userDto));
 
       if (token) {
+        api.defaults.headers.Authorization = `Bearer ${token}`;
         localStorage.setItem("token", token);
+
         dispatch({ type: "AUTHENTICATE", payload: true });
         dispatch({
           type: "CHANGE_USERNAME",
           payload: user.userName,
         });
+
         history.push("/home");
       }
     } catch {
@@ -101,4 +104,4 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-export default Login;
+export default LoginPage;

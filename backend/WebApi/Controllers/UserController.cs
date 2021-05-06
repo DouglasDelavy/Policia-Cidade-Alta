@@ -12,8 +12,8 @@ namespace Api.Controllers
     [Route("user")]
     public class UserController : ControllerBase
     {
-        public IConfiguration Configuration { get; }
-        private UserService _appService;
+        private IConfiguration Configuration { get; }
+        private readonly UserService _appService;
         public UserController(IConfiguration configuration, UserService appService)
         {
             _appService = appService;

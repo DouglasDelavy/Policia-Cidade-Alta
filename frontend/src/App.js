@@ -1,23 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Layout, Button } from "antd";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Logo from "./assets/logo.png";
-
 import MainRoutes from "./routes";
-import { useDispatch, useSelector } from "react-redux";
 import api from "./services/api";
 import history from "./history";
 
 const App = () => {
   const dispatch = useDispatch();
-  const userName = useSelector((state) => state.username);
+  const authenticated = useSelector((state) => state.authenticated);
+  const username = useSelector((state) => state.username);
 
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       api.defaults.headers.Authorization = `Bearer ${token}`;
@@ -26,12 +26,12 @@ const App = () => {
     setLoading(false);
   }, []);
 
-  const Logout = React.useCallback(() => {
+  const onLogout = () => {
     localStorage.removeItem("token");
     api.defaults.headers.Authorization = "";
     dispatch({ type: "AUTHENTICATE", payload: false });
     history.push("/");
-  });
+  };
 
   return (
     !loading && (
@@ -40,11 +40,11 @@ const App = () => {
           <Header>
             <img src={Logo} alt="Logo" />
 
-            {window.location.hash !== "#/" && (
+            {authenticated && (
               <Actions>
-                <Button type="primary" size="small" danger onClick={Logout}>
-                  Sair
-                </Button>
+                <Icon className="fas fa-user-circle" />
+                <UserName>{username}</UserName>
+                <Logout onClick={onLogout}>sair</Logout>
               </Actions>
             )}
           </Header>
@@ -55,14 +55,12 @@ const App = () => {
 
           <ToastContainer
             position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
             closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
             draggable
-            pauseOnHover
+            autoClose={5000}
+            newestOnTop={false}
+            pauseOnHover={false}
+            hideProgressBar={false}
           />
         </Layout>
       </Container>
@@ -70,12 +68,29 @@ const App = () => {
   );
 };
 
+const Logout = styled.a`
+  line-height: 0.6rem;
+`;
+
+const UserName = styled.div`
+  color: #b9b9b9;
+  font-weight: bold;
+  line-height: 0.5rem;
+`;
+
+const Icon = styled.span`
+  font-size: 1.5rem;
+  color: #f9b236;
+`;
+
 const Actions = styled.div`
   height: 90%;
 
+  gap: 0.25rem;
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Header = styled(Layout.Header)`
@@ -88,16 +103,19 @@ const Header = styled(Layout.Header)`
 
 const Container = styled.div`
   width: 60vw;
-  height: 55vh;
+  height: 62vh;
 
   position: absolute;
   left: 50%;
   top: 50%;
 
   transform: translate(-50%, -50%);
-
   img {
     width: 3rem;
+  }
+
+  .layout {
+    height: 63vh;
   }
 `;
 
