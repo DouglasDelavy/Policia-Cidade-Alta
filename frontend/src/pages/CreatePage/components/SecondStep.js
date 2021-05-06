@@ -49,7 +49,7 @@ const SecondStep = ({ setPreviousStep }) => {
           label="Prisão"
           value={prisonTime}
           placeholder="Tempo de Prisão"
-          onChange={(event) => setPrisonTime(event.target.value)}
+          onChange={(event) => setPrisonTime(parseInt(event.target.value) || 0)}
         />
 
         <Input
