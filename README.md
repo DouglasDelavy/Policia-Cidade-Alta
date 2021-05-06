@@ -1,4 +1,4 @@
-# Policia - Cidade Alta
+# Polícia - Cidade Alta
 
 <h1 align="center"><img src="https://i.imgur.com/PNV0sLz.png"></h1>
 
