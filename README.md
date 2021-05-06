@@ -72,3 +72,9 @@ senha: admin
 ```
 
 # Aproveite o App :rocket:
+
+![Login](https://i.imgur.com/MOXjfA6.png)
+![Register](https://i.imgur.com/m2fC2fM.png)
+![Home](https://i.imgur.com/4CN2DWv.png)
+![Add](https://i.imgur.com/GS55jRs.png)
+![View](https://i.imgur.com/EXrUB9B.png)
