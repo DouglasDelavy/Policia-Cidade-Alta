@@ -13,21 +13,22 @@ Repositório é dedicado a policia de Cidade Alta, nele podemos controlar os có
 
 ## Tecnologias
 
-#### **Front-End** ([React][react])
+#### **Front-End** (React)
 
-- **[Ant Design][ant_design]**
-- **[Redux][redux]**
-- **[Styled Components][styled_components]**
-- **[React Router Dom][react_router_dom]**
-- **[React Toastify][react_toastify]**
-- **[Axios][axios]**
-- **[Date Fns][date_fns]**
+- **Ant Design**
+- **Redux**
+- **Styled Components**
+- **React Router Dom**
+- **React Toastify**
+- **Axios**
+- **Date Fns**
 
-#### **Back-End** ([.Net][dotnet_core])
+#### **Back-End** (C#)
 
-- **[Entity Framework][dotnet_efcore]**
-- **[MySql][mysql]**
-- **[Swagger UI][swagger_api]**
+- **.Net Core**
+- **Entity Framework**
+- **MySql**
+- **Swagger UI**
 - **JWT**
 
 ## Instalação
