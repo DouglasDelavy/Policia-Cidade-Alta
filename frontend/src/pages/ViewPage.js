@@ -92,11 +92,13 @@ const ViewPage = ({ match }) => {
         />
 
         <Input
+          min="1"
+          max="1000"
           type="number"
           label="Prisão"
           value={prisonTime}
           placeholder="Tempo de Prisão"
-          onChange={(event) => setPrisonTime(event.target.value)}
+          onChange={(event) => setPrisonTime(parseInt(event.target.value) || 0)}
         />
 
         <Select
